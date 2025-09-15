@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Key Management Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <div class="gradient-bg text-white p-6 shadow-lg">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-3xl font-bold mb-2">🔑 Device Key Management Panel</h1>
+            <p class="text-blue-100">Manage your device keys and track balance</p>
+        </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto p-6">
+        <!-- Balance Card -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8 border-l-4 border-green-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-2">💰 Current Balance</h2>
+                    <p class="text-3xl font-bold text-green-600" id="balance">₹1,00,000</p>
+                </div>
+                <div class="bg-green-100 p-4 rounded-full">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Generation Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- 1 Day Key -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover border-t-4 border-blue-500">
+                <div class="text-center">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">📱</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">1 Day Key</h3>
+                    <p class="text-2xl font-bold text-blue-600 mb-4">₹5</p>
+                    <button onclick="generateKey(1, 5)" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                        Generate Key
+                    </button>
+                </div>
+            </div>
+
+            <!-- 7 Days Key -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover border-t-4 border-purple-500">
+                <div class="text-center">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">📲</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">7 Days Key</h3>
+                    <p class="text-2xl font-bold text-purple-600 mb-4">₹20</p>
+                    <button onclick="generateKey(7, 20)" class="w-full bg-purple-500 hover:bg-purple-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                        Generate Key
+                    </button>
+                </div>
+            </div>
+
+            <!-- 30 Days Key -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover border-t-4 border-orange-500">
+                <div class="text-center">
+                    <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">💻</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">30 Days Key</h3>
+                    <p class="text-2xl font-bold text-orange-600 mb-4">₹50</p>
+                    <button onclick="generateKey(30, 50)" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                        Generate Key
+                    </button>
+                </div>
+            </div>
+
+            <!-- 60 Days Key -->
+            <div class="bg-white rounded-xl shadow-lg p-6 card-hover border-t-4 border-red-500">
+                <div class="text-center">
+                    <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🖥️</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">60 Days Key</h3>
+                    <p class="text-2xl font-bold text-red-600 mb-4">₹100</p>
+                    <button onclick="generateKey(60, 100)" class="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                        Generate Key
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Generated Keys History -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                <span class="mr-2">📋</span> Generated Keys History
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b border-gray-200">
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Key</th>
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Duration</th>
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Price</th>
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Generated</th>
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Expires On</th>
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="keyHistory">
+                        <tr class="border-b border-gray-100">
+                            <td colspan="7" class="text-center py-8 text-gray-500">
+                                No keys generated yet. Click on any plan above to generate your first key!
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-md mx-4 shadow-2xl">
+            <div class="text-center">
+                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl">✅</span>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Key Generated Successfully!</h3>
+                <p class="text-gray-600 mb-4">Your device key has been created</p>
+                <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                    <p class="text-sm text-gray-600 mb-1">Your Key:</p>
+                    <div class="flex items-center justify-between bg-white p-3 rounded border">
+                        <p class="font-mono text-lg font-bold text-blue-600" id="generatedKey"></p>
+                        <button onclick="copyKey()" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors">
+                            📋 Copy
+                        </button>
+                    </div>
+                </div>
+                <button onclick="closeModal()" class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentBalance = 100000;
+        let keyCounter = 1;
+
+        function generateKey(days, price) {
+            if (currentBalance < price) {
+                alert('❌ Insufficient balance! Please recharge your account.');
+                return;
+            }
+
+            // Deduct amount from balance
+            currentBalance -= price;
+            document.getElementById('balance').textContent = `₹${currentBalance.toLocaleString()}`;
+
+            // Generate random key
+            const key = generateRandomKey();
+            
+            // Add to history
+            addToHistory(key, days, price);
+            
+            // Show success modal
+            document.getElementById('generatedKey').textContent = key;
+            document.getElementById('successModal').classList.remove('hidden');
+            document.getElementById('successModal').classList.add('flex');
+        }
+
+        function generateRandomKey() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let key = '';
+            for (let i = 0; i < 16; i++) {
+                if (i > 0 && i % 4 === 0) key += '-';
+                key += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return key;
+        }
+
+        function addToHistory(key, days, price) {
+            const historyTable = document.getElementById('keyHistory');
+            const now = new Date();
+            const expiryDate = new Date(now.getTime() + (days * 24 * 60 * 60 * 1000));
+            
+            // Remove "no keys" message if it exists
+            if (historyTable.children.length === 1 && historyTable.children[0].children[0].colSpan === 7) {
+                historyTable.innerHTML = '';
+            }
+
+            const row = document.createElement('tr');
+            row.className = 'border-b border-gray-100 hover:bg-gray-50';
+            row.innerHTML = `
+                <td class="py-3 px-4 font-mono text-sm">${key}</td>
+                <td class="py-3 px-4">${days} days</td>
+                <td class="py-3 px-4 font-semibold text-green-600">₹${price}</td>
+                <td class="py-3 px-4 text-sm text-gray-600">${now.toLocaleString()}</td>
+                <td class="py-3 px-4 text-sm text-red-600 font-medium">${expiryDate.toLocaleDateString()} ${expiryDate.toLocaleTimeString()}</td>
+                <td class="py-3 px-4">
+                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
+                        Active
+                    </span>
+                </td>
+                <td class="py-3 px-4">
+                    <button onclick="copyToClipboard('${key}')" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs transition-colors">
+                        📋 Copy
+                    </button>
+                </td>
+            `;
+            
+            historyTable.insertBefore(row, historyTable.firstChild);
+            keyCounter++;
+        }
+
+        function closeModal() {
+            document.getElementById('successModal').classList.add('hidden');
+            document.getElementById('successModal').classList.remove('flex');
+        }
+
+        function copyKey() {
+            const keyText = document.getElementById('generatedKey').textContent;
+            copyToClipboard(keyText);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                // Show success message
+                const originalText = event.target.textContent;
+                event.target.textContent = '✅ Copied!';
+                event.target.classList.add('bg-green-500');
+                event.target.classList.remove('bg-blue-500');
+                
+                setTimeout(() => {
+                    event.target.textContent = originalText;
+                    event.target.classList.remove('bg-green-500');
+                    event.target.classList.add('bg-blue-500');
+                }, 2000);
+            }).catch(function(err) {
+                alert('Failed to copy key: ' + err);
+            });
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('successModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97f712d230377143',t:'MTc1NzkyODI5Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
